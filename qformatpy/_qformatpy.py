@@ -1,7 +1,7 @@
 import numpy as np
 
 
-__all__ = ["rounding", "overflow"]
+__all__ = ["rounding", "overflow", "qformat"]
 
 
 def rounding(iarray, rnd_method):
