@@ -154,12 +154,15 @@ def qformat(x, qi: int, qf: int, signed: bool = True, rnd_method='Trunc',
             - 'HalfDown': Round half down.
             - 'HalfTowardsZero': Round half towards zero.
             - 'HalfAwayFromZero': Round half away from zero.
+
         Default is 'Trunc'.
+
     overflow_action : str, optional
         Action to be taken in case of overflow. Supported actions:
             - 'Error': Raise an OverflowError if overflow occurs.
             - 'Wrap': Wraparound overflow, values wrap around the representable range.
             - 'Saturate': Saturate overflow, values are clamped to the maximum or minimum representable value.
+
         Default is 'Wrap'.
     """
     x = np.asarray(x * 2**qf, dtype=np.float64)
