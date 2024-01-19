@@ -164,6 +164,11 @@ def qformat(x, qi: int, qf: int, signed: bool = True, rnd_method='Trunc',
             - 'Saturate': Saturate overflow, values are clamped to the maximum or minimum representable value.
 
         Default is 'Wrap'.
+
+    Returns
+    -------
+    x : float or numpy.ndarray
+        The formatted value(s) after applying rounding and overflow handling.
     """
     x = np.asarray(x * 2**qf, dtype=np.float64)
 
