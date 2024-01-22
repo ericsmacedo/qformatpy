@@ -4,7 +4,7 @@ import numpy as np
 __all__ = ["rounding", "overflow", "qformat"]
 
 
-def rounding(iarray, rnd_method):
+def rounding(iarray, rnd_method: str = 'Trunc'):
     """
     Rounds each element in the input array according to the specified rounding method.
 
@@ -23,6 +23,8 @@ def rounding(iarray, rnd_method):
             - 'HalfTowardsZero': Round half towards zero.
             - 'HalfAwayFromZero': Round half away from zero.
 
+        Default is 'Trunc'
+
     Returns
     -------
     numpy.ndarray
@@ -35,9 +37,14 @@ def rounding(iarray, rnd_method):
 
     Examples
     --------
+    >>> import numpy as np
+    >>> from qformatpy import rounding
     >>> input_array = np.array([3.7, 2.2, -5.5])
     >>> rounding(input_array, 'Trunc')
     array([ 3,  2, -6])
+
+    The rounding method can be changed to 'HalfUp':
+
 
     >>> rounding(input_array, 'HalfUp')
     array([ 4,  2, -5])
@@ -65,7 +72,7 @@ def rounding(iarray, rnd_method):
     return iarray.astype(np.int64)
 
 
-def overflow(iarray, signed, w, overflow_action):
+def overflow(iarray, signed: bool = True, w: int = 16, overflow_action: str = 'Wrap'):
     """
     Handle overflow in an integer array based on the specified overflow action.
 
@@ -83,6 +90,8 @@ def overflow(iarray, signed, w, overflow_action):
             - 'Wrap': Wraparound overflow, values wrap around the representable range.
             - 'Saturate': Saturate overflow, values are clamped to the maximum or minimum representable value.
 
+        Default is 'Wrap'.
+
     Returns
     -------
     numpy.ndarray
@@ -94,9 +103,27 @@ def overflow(iarray, signed, w, overflow_action):
         If overflow_action is 'Error' and overflow occurs.
     ValueError
         If an invalid overflow_action is provided.
-    """
 
-    iarray = iarray.astype(np.int64)
+    Examples
+    --------
+    .. plot::
+
+        The example below shows an 8 bit integrator overflowing with the overflow 
+        function set to 'Wrap':
+
+        >>> import matplotlib.pyplot as plt
+        >>> import numpy as np
+        >>> from qformatpy import overflow
+        >>> n_smp = 512
+        >>> y = np.zeros(n_smp)
+        >>> for i in range(n_smp - 1):
+        >>>     y[i+1] = overflow(y[i] + 1, signed=True, w=8, overflow_action='Wrap')
+        >>> plt.plot(y)
+        >>> plt.grid()
+        >>> plt.show()
+
+    """
+    iarray = np.asarray(iarray, dtype=np.int64)
 
     # Maximum and minimum values with w bits representation
     if signed:

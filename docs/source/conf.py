@@ -9,6 +9,8 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 import qformatpy
+import matplotlib.pyplot as plt
+import matplotlib
 
 
 project = 'QformatPy'
@@ -20,14 +22,24 @@ release = '0.1'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
+    'sphinx.ext.coverage',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx.ext.napoleon',
+    'matplotlib.sphinxext.plot_directive',
+    'numpydoc',
 ]
 
 templates_path = ['_templates']
 exclude_patterns = []
+
+
+# Plot directives
+plot_include_source = True
+plot_html_show_formats = False
+plot_html_show_source_link = False
 
 
 # -- Options for HTML output -------------------------------------------------
