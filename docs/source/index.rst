@@ -92,6 +92,20 @@ Example usage
    >>> qformatpy.rounding(test_array, 'HalfDown')
    array([1, 6, 3])
 
+   # Tests showing overflow and wrap
+   >>> test_array = np.array([4, 5.6778, 356.123])
+   >>> qformatpy.qformat(test_array, qi=5, qf=3)
+   array([4.   , 5.625, 4.   ])
+
+   >>> qformatpy.qformat(test_array, qi=9, qf=3)
+   array([   4.   ,    5.625, -156.   ])
+
+   # The input does not need to be an array
+   >>> qformatpy.qformat(np.pi, qi=3, qf=4)
+   3.125
+
+   
+
 
 Rounding methods
 ----------------
