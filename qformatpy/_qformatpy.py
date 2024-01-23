@@ -57,15 +57,18 @@ def rounding(iarray, rnd_method: str = 'Trunc'):
     elif rnd_method == 'TowardsZero':  # Round towards zero
         pass
     elif rnd_method == "AwayFromZero":
-        iarray = np.sign(iarray) * np.ceil(np.abs(iarray))
+        iarray = np.where(iarray >= 0, np.ceil(np.abs(iarray)),
+                          -np.ceil(np.abs(iarray)))
     elif rnd_method == 'HalfUp':
         iarray = np.floor(iarray + 0.5)
     elif rnd_method == 'HalfDown':
         iarray = np.ceil(iarray - 0.5)
     elif rnd_method == "HalfTowardsZero":
-        iarray = np.sign(iarray) * np.ceil(np.abs(iarray) - 0.5)
+        iarray = np.where(iarray >= 0, np.ceil(np.abs(iarray) - 0.5),
+                          -np.ceil(np.abs(iarray) - 0.5))
     elif rnd_method == 'HalfAwayFromZero':
-        iarray = np.sign(iarray) * np.floor(np.abs(iarray) + 0.5)
+        iarray = np.where(iarray >= 0, np.floor(np.abs(iarray) + 0.5),
+                          -np.floor(np.abs(iarray) + 0.5))
     else:
         raise ValueError(f"invaild rnd_method: {rnd_method}")
 
@@ -108,7 +111,7 @@ def overflow(iarray, signed: bool = True, w: int = 16, overflow_action: str = 'W
     --------
     .. plot::
 
-        The example below shows an 8 bit integrator overflowing with the overflow 
+        The example below shows an 8 bit integrator overflowing with the overflow
         function set to 'Wrap':
 
         >>> import matplotlib.pyplot as plt
@@ -140,14 +143,12 @@ def overflow(iarray, signed: bool = True, w: int = 16, overflow_action: str = 'W
             raise OverflowError("Overflow!")
     elif overflow_action == 'Wrap':
         mask = (1 << w)
-        iarray &= (mask - 1)
+        iarray = iarray & (mask - 1)
         if signed:
-            iarray[iarray >= (1 << (w - 1))] |= (-mask)
+            iarray = np.where(iarray < (1 << (w - 1)), iarray, iarray | (-mask))
     elif overflow_action == 'Saturate':
-        up = iarray > upper
-        low = iarray < lower
-        iarray[up] = upper
-        iarray[low] = lower
+        iarray[iarray > upper] = upper
+        iarray[iarray < lower] = lower
     else:
         raise ValueError(f"invaild overflow_action: {overflow_action}")
 
@@ -203,6 +204,9 @@ def qformat(x, qi: int, qf: int, signed: bool = True, rnd_method='Trunc',
         x = x.reshape(1, )
 
     x = rounding(x, rnd_method=rnd_method)
-    x = overflow(x, signed=signed, w=(qi + qf), overflow_action=overflow_action) / 2**qf
+    x = overflow(x, signed=signed, w=(qi + qf), overflow_action=overflow_action)
 
-    return x
+    if x.size == 1:
+        return x.item() / 2**qf
+    else:
+        return x / 2**qf
