@@ -1,3 +1,34 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = [
+    "setuptools",
+    "setuptools-scm>=8.0",
+    "wheel",
+]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "qformatpy"
+authors = [
+    {name = 'Eric Macedo', email = 'ericsmacedo@gmail.com'}
+]
+description = 'A Python library for Q format representation and overflow handling.'
+dynamic = ["version"] # This in conjunction with setuptools_scm, will generate the 
+                      # versions dynamically
+readme = "README.rst"
+keywords = ["DSP", "Fixed-point", "Signal-Processing", "Qformat"]
+license = {text = "MIT"}
+dependencies = [
+    "numpy"
+]
+
+[project.urls]
+Documentation = "https://qformatpy.readthedocs.io/en/latest/"
+"Source Code" = "https://github.com/ericsmacedo/qformatpy"
+
+[tool.setuptools]
+packages = ["qformatpy"]
+
+[tool.setuptools_scm]
+
+[optional-dependencies]
+all = ["pytest", "fxpmath", "numfi"]
