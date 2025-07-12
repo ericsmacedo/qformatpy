@@ -179,44 +179,48 @@ def _qfmt_scalar(x, qi: int, qf: int, signed: bool = True, rnd_method=TRUNC, ovf
     return x / 2.0**qf
 
 
-def qformat(x, qi: int, qf: int, signed: bool = True, rnd_method=TRUNC, ovf_method=WRAP):  # noqa: PLR0913
+def qformat(  # noqa: PLR0913
+    x: float | np.ndarray, qi: int, qf: int, signed: bool = True, rnd_method=TRUNC, ovf_method=WRAP
+) -> float | np.ndarray:
     """Convert a numeric value to fixed-point representation using Q-format notation.
 
     Parameters
     ----------
-    x : int, float, or array-like
+    x : int, float or array-like
         The input value(s) to convert.
     qi : int
         Number of integer bits (excluding sign bit if signed=True).
     qf : int
         Number of fractional bits.
     signed : bool, optional
-        Whether the fixed-point format is signed. Default is True.
+        Whether the fixed-point format is signed (default is True).
     rnd_method : int, optional
-        Rounding method to apply. Default is TRUNC (0).
+        Rounding method to apply (default is TRUNC (0)).
 
         Supported methods:
-            - TRUNC (0): Bit Truncation. Rounds towards negative infinity.
-            - CEIL (1): Round toward positive infinity.
-            - TO_ZERO (2): Round toward zero.
-            - AWAY (3): Round away from zero.
-            - HALF_UP (4): Round to nearest; ties round away from zero.
-            - HALF_DOWN (5): Round to nearest; ties round toward zero.
-            - HALF_EVEN (6): Round to nearest; ties round to even.
-            - HALF_ZERO (7): Round to nearest; ties round toward zero.
-            - HALF_AWAY (8): Round to nearest; ties round away from zero.
+
+        - TRUNC (0): Bit Truncation. Rounds towards negative infinity.
+        - CEIL (1): Round toward positive infinity.
+        - TO_ZERO (2): Round toward zero.
+        - AWAY (3): Round away from zero.
+        - HALF_UP (4): Round to nearest; ties round away from zero.
+        - HALF_DOWN (5): Round to nearest; ties round toward zero.
+        - HALF_EVEN (6): Round to nearest; ties round to even.
+        - HALF_ZERO (7): Round to nearest; ties round toward zero.
+        - HALF_AWAY (8): Round to nearest; ties round away from zero.
 
     ovf_method : int, optional
-        Overflow handling method. Default is WRAP (0).
+        Overflow handling method (default is WRAP (0)).
 
         Supported methods:
-            - WRAP (0): Wrap around on overflow (modulo behavior).
-            - SAT (1): Saturate to maximum/minimum representable value.
-            - ERROR (2): Raise an error if overflow occurs.
+
+        - WRAP (0): Wrap around on overflow (modulo behavior).
+        - SAT (1): Saturate to maximum/minimum representable value.
+        - ERROR (2): Raise an error if overflow occurs.
 
     Returns:
     -------
-    int or ndarray
+    float or ndarray
         Fixed-point representation of the input, as integer(s).
 
     Notes:
@@ -226,7 +230,6 @@ def qformat(x, qi: int, qf: int, signed: bool = True, rnd_method=TRUNC, ovf_meth
         - n fractional bits (qf)
         - Optional sign bit if `signed` is True
     """
-    # Array case
     if isinstance(x, np.ndarray):
         return _qfmt_array(x, qi, qf, signed, rnd_method, ovf_method)
 
