@@ -180,6 +180,52 @@ def _qfmt_scalar(x, qi: int, qf: int, signed: bool = True, rnd_method=TRUNC, ovf
 
 
 def qformat(x, qi: int, qf: int, signed: bool = True, rnd_method=TRUNC, ovf_method=WRAP):  # noqa: PLR0913
+    """Convert a numeric value to fixed-point representation using Q-format notation.
+
+    Parameters
+    ----------
+    x : int, float, or array-like
+        The input value(s) to convert.
+    qi : int
+        Number of integer bits (excluding sign bit if signed=True).
+    qf : int
+        Number of fractional bits.
+    signed : bool, optional
+        Whether the fixed-point format is signed. Default is True.
+    rnd_method : int, optional
+        Rounding method to apply. Default is TRUNC (0).
+
+        Supported methods:
+            - TRUNC (0): Bit Truncation. Rounds towards negative infinity.
+            - CEIL (1): Round toward positive infinity.
+            - TO_ZERO (2): Round toward zero.
+            - AWAY (3): Round away from zero.
+            - HALF_UP (4): Round to nearest; ties round away from zero.
+            - HALF_DOWN (5): Round to nearest; ties round toward zero.
+            - HALF_EVEN (6): Round to nearest; ties round to even.
+            - HALF_ZERO (7): Round to nearest; ties round toward zero.
+            - HALF_AWAY (8): Round to nearest; ties round away from zero.
+
+    ovf_method : int, optional
+        Overflow handling method. Default is WRAP (0).
+
+        Supported methods:
+            - WRAP (0): Wrap around on overflow (modulo behavior).
+            - SAT (1): Saturate to maximum/minimum representable value.
+            - ERROR (2): Raise an error if overflow occurs.
+
+    Returns:
+    -------
+    int or ndarray
+        Fixed-point representation of the input, as integer(s).
+
+    Notes:
+    -----
+    Uses ARM-style Q-format notation where a Qm.n format has:
+        - m integer bits (qi)
+        - n fractional bits (qf)
+        - Optional sign bit if `signed` is True
+    """
     # Array case
     if isinstance(x, np.ndarray):
         return _qfmt_array(x, qi, qf, signed, rnd_method, ovf_method)
