@@ -30,8 +30,8 @@ test: .venv/.valid ## [ALL] Run Unittests via 'pytest' with {PYTEST_OPTIONS}
 	rm -rf .coverage
 	NUMBA_DISABLE_JIT=1 ${ENV} pytest -vv ${PYTEST_OPTIONS} --cov --cov-append --no-cov-on-fail
 	${ENV} pytest -vv ${PYTEST_OPTIONS} --cov --cov-append --no-cov-on-fail tests/test_scalar_vs_array.py
-	${ENV} coverage combine
-	${ENV} coverage report
+	#${ENV} coverage combine
+	#${ENV} coverage report
 	@echo  "See coverage report:\n\n    file://${PWD}/htmlcov/index.html\n"
 
 
