@@ -4,15 +4,15 @@ Welcome to QformatPy documentation!
 Introduction
 ------------
 Welcome to the qformat Python library, a powerful tool for formatting floating-point
-numbers into fixed-point representation with Q notation. 
+numbers into fixed-point representation with Q notation.
 
-This library supports ARM's Q format, where QI includes the sign bit. 
+This library supports ARM's Q format, where QI includes the sign bit.
 
 The main function, qformat, allows users to specify the number of integer bits (QI),
-fractional bits (QF), whether the number is signed or unsigned, and provides flexibility 
+fractional bits (QF), whether the number is signed or unsigned, and provides flexibility
 in choosing rounding and overflow handling methods.
 
-Whether you're working on embedded systems, signal processing, or any application requiring fixed-point 
+Whether you're working on embedded systems, signal processing, or any application requiring fixed-point
 representation, qformat is here to streamline the process.
 
 The example below shows pi being converter to the sQ4.8 format, using Truncation as the
