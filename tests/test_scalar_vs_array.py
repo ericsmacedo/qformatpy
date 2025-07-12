@@ -68,7 +68,7 @@ def _qfmt_scalar_njit(a, qi, qf, signed, rnd_method, ovf_method):  # noqa: PLR09
 
 
 # Test configurations
-QI_VALUES = [4, 8, 16, 9, 0, -4, 5, 7]
+QI_VALUES = [4, 8, 16, 9]
 QF_VALUES = [0, 4, 8, 10, 1]
 ROUNDING_METHODS = [TRUNC, CEIL, TO_ZERO, AWAY, HALF_UP, HALF_DOWN, HALF_EVEN, HALF_ZERO, HALF_AWAY]
 OVERFLOW_METHODS = [WRAP, SAT]

@@ -27,17 +27,12 @@ pre-commit: .venv/.valid .git/hooks/pre-commit ## [ALL] Run 'pre-commit' on all 
 
 .PHONY: test
 test: .venv/.valid ## [ALL] Run Unittests via 'pytest' with {PYTEST_OPTIONS}
-	${ENV} pytest -vv ${PYTEST_OPTIONS}
+	rm -rf .coverage
+	NUMBA_DISABLE_JIT=1 ${ENV} pytest -vv ${PYTEST_OPTIONS} --cov --cov-append --no-cov-on-fail
+	${ENV} pytest -vv ${PYTEST_OPTIONS} --cov --cov-append --no-cov-on-fail tests/test_scalar_vs_array.py
+	${ENV} coverage combine
+	${ENV} coverage report
 	@echo  "See coverage report:\n\n    file://${PWD}/htmlcov/index.html\n"
-
-
-.PHONY: test2ref
-test2ref: .venv/.valid ## Run Unittests via 'pytest' with {PYTEST_OPTIONS} and update 'tests/refdata'
-	touch .test2ref
-	rm -rf tests/refdata
-	${ENV} pytest -vv ${PYTEST_OPTIONS}
-	@echo  "See coverage report:\n\n    file://${PWD}/htmlcov/index.html\n"
-	rm .test2ref
 
 
 .PHONY: checktypes

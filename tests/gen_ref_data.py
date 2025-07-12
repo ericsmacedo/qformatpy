@@ -19,41 +19,40 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+"""Generates reference data for tests."""
 
-"""Rounding method constants for use with Numba-optimized functions."""
+from itertools import product
+from pathlib import Path
 
-# Integer codes (for Numba performance)
-TRUNC = 0
-CEIL = 1
-TO_ZERO = 2
-AWAY = 3
-HALF_UP = 4
-HALF_DOWN = 5
-HALF_EVEN = 6
-HALF_ZERO = 7
-HALF_AWAY = 8
+import numpy as np
+from tqdm import tqdm
 
-WRAP = 0
-SAT = 1
-ERROR = 2
+from qformatpy import qformat as qfmt
+from qformatpy.constants import rounding_modes
 
-rounding_modes = {
-    "TRUNC": TRUNC,
-    "CEIL": CEIL,
-    "TO_ZERO": TO_ZERO,
-    "AWAY": AWAY,
-    "HALF_UP": HALF_UP,
-    "HALF_DOWN": HALF_DOWN,
-    "HALF_EVEN": HALF_EVEN,
-    "HALF_ZERO": HALF_ZERO,
-    "HALF_AWAY": HALF_AWAY,
-}
+PRJ_PATH = Path(__file__).parent.parent
 
-overflow_modes = {
-    "WRAP": WRAP,
-    "SAT": SAT,
-    "ERROR": ERROR,
-}
 
-rounding_modes_inv = {v: k for k, v in rounding_modes.items()}
-overflow_modes_inv = {v: k for k, v in overflow_modes.items()}
+def gen_ref():
+    """Generate reference data for tests."""
+    n_smp = 2**8
+
+    rng = np.random.default_rng()  # Create a Generator instance
+    w = rng.randint(low=1, high=16, size=n_smp)
+    qf = rng.randint(low=0, high=8, size=n_smp)
+    qi = w - qf
+    x = rng.normal(loc=0, scale=60, size=n_smp)
+    qfmt_args = list(product(rounding_modes.values(), [0, 1], [True, False]))
+
+    ref_file = ""
+    for i in tqdm(range(n_smp)):
+        for rnd_method, ovf_method, signed in qfmt_args:
+            out = qfmt(x[i], qi=qi[i], qf=qf[i], rnd_method=rnd_method, ovf_method=ovf_method, signed=signed)
+            ref_file += f"{x[i]}, {qi[i]}, {qf[i]}, {rnd_method}, {ovf_method}, {signed}, {out}\n"
+
+    output_path = PRJ_PATH / "tests" / "test_data.txt"
+    output_path.write_text(ref_file)
+
+
+if __name__ == "__main__":
+    gen_ref()
