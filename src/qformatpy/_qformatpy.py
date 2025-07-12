@@ -203,8 +203,8 @@ def qformat(  # noqa: PLR0913
         - CEIL (1): Round toward positive infinity.
         - TO_ZERO (2): Round toward zero.
         - AWAY (3): Round away from zero.
-        - HALF_UP (4): Round to nearest; ties round away from zero.
-        - HALF_DOWN (5): Round to nearest; ties round toward zero.
+        - HALF_UP (4): Round to nearest; ties round towards positive infinity.
+        - HALF_DOWN (5): Round to nearest; ties round toward negative infinity.
         - HALF_EVEN (6): Round to nearest; ties round to even.
         - HALF_ZERO (7): Round to nearest; ties round toward zero.
         - HALF_AWAY (8): Round to nearest; ties round away from zero.
