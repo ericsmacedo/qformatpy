@@ -20,6 +20,9 @@ The library provides a single function, `qformat`, that lets you control integer
 
 Whether you're developing embedded systems, DSP algorithms, or just need fast fixed-point conversion, **qformatpy** keeps things straightforward.
 
+To get started, check the example of a [fixed-point integrator](docs/example_int/example_int.md) implemented
+using the library.
+
 - [Documentation](https://qformatpy.readthedocs.io/en/latest/)
 - [PyPI](https://pypi.org/project/qformatpy/)
 - [Sources](https://github.com/ericsmacedo/qformatpy)

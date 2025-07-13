@@ -33,12 +33,10 @@ nav:
   - API:
       - Overview: api.md
   - Examples:
-    - "ex_integrator/ex_integrator.ipynb"
+    - example_int/example_int.md
 
 plugins:
   - search
-  - mkdocs-jupyter:
-      execute: true
   - include-markdown
   - autorefs
   - literate-nav:

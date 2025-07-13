@@ -57,7 +57,6 @@ dev = [
     "matplotlib>=3.10.3",
     "mkdocs-click>=0.8.1",
     "mkdocs-include-markdown-plugin>=6.0.5",
-    "mkdocs-jupyter>=0.25.1",
     "mkdocs-literate-nav>=0.6.1",
     "mkdocs-material>=9.5.18",
     "mkdocstrings-python>=1.9.2",
