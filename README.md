@@ -21,9 +21,9 @@ The library provides a single function, `qformat`, that lets you control integer
 Whether you're developing embedded systems, DSP algorithms, or just need fast fixed-point conversion, **qformatpy** keeps things straightforward.
 
 - [Documentation](https://qformatpy.readthedocs.io/en/latest/)
-* [PyPI](https://pypi.org/project/qformatpy/)
-* [Sources](https://github.com/ericsmacedo/qformatpy)
-* [Issues](https://github.com/ericsmacedo/qformatpy/issues)
+- [PyPI](https://pypi.org/project/qformatpy/)
+- [Sources](https://github.com/ericsmacedo/qformatpy)
+- [Issues](https://github.com/ericsmacedo/qformatpy/issues)
 
 ## Features
 
