@@ -32,9 +32,13 @@ nav:
   #- Usage: usage.md
   - API:
       - Overview: api.md
+  - Examples:
+    - "ex_integrator/ex_integrator.ipynb"
 
 plugins:
   - search
+  - mkdocs-jupyter:
+      execute: true
   - include-markdown
   - autorefs
   - literate-nav:
