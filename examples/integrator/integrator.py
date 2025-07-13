@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from qformatpy import qformat as qfmt
 from qformatpy.constants import SAT
 
-
 @njit
 def integrator(x: np.ndarray) -> np.ndarray:
     """Example of a simple fixed-point integrator."""
@@ -17,7 +16,7 @@ def integrator(x: np.ndarray) -> np.ndarray:
     x_qfmt = qfmt(x, 4, 5, ovf_method=SAT)
 
     # implement accumulator
-    acc = 0
+    acc = 0.0
     y = np.zeros(n_smp)
     for i in range(len_x):
 
@@ -27,7 +26,7 @@ def integrator(x: np.ndarray) -> np.ndarray:
         # The accumulator register is 12 bits, with 
         # fixed-point format of sQ6.6. The default overflow
         # method is WRAP
-        acc = qfmt(sum_out, 7, 5)
+        acc = qfmt(sum_out, 7, 5)  # type: ignore
         y[i] = sum_out 
 
     return y
@@ -37,7 +36,7 @@ def integrator(x: np.ndarray) -> np.ndarray:
 n_smp = 2**18
 
 # DC value of 5 + Gaussian noise
-x = 5*np.ones(n_smp)
+x = 5.0*np.ones(n_smp)
 
 y = integrator(x)
 
