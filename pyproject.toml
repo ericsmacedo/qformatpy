@@ -25,7 +25,7 @@
 [project]
 name = "qformatpy"
 dynamic = ["version"]
-description = "Easy-To-Use SystemVerilog Parser"
+description = "Simple to use fixed-point library."
 readme = "README.md"
 authors = [
     {name = 'Eric Macedo', email = 'ericsmacedo@gmail.com'},
